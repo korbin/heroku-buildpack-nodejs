@@ -17,8 +17,9 @@ source $bp_dir/bin/common.sh
 echo "$(ls -la /app)"
 echo "$(ls -la /app/slug-compiler)"
 echo "$(ls -la /app/slug-compiler/lib)"
+echo "$(tail /app/slug-compiler/lib/*)"
 
-sed -i '' 's/FileUtils.rm_rf(File.join(build_dir, ".git"))//' /app/slug-compiler/lib/slug_compiler.rb
+# sed -i '' 's/FileUtils.rm_rf(File.join(build_dir, ".git"))//' /app/slug-compiler/lib/slug_compiler.rb
 
 # Output npm debug info on error
 trap cat_npm_debug_log ERR
