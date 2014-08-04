@@ -15,8 +15,8 @@ bp_dir=$(cd $(dirname $0); cd ..; pwd)
 source $bp_dir/bin/common.sh
 
 echo "$(git reflog --all)"
-echo "$(ls -la /app/tmp/repo.git/**)"
-echo "$(cat -la /app/tmp/repo.git/**)"
+echo "$(cat /app/tmp/repo.git/**)"
+echo "$(ls -la /app/tmp/repo.git/*)"
 
 # Output npm debug info on error
 trap cat_npm_debug_log ERR
