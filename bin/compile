@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e            # fail fast
-set -o pipefail   # don't ignore exit codes when piping output
+set -o pipefail   # dont ignore exit codes when piping output
 # set -x          # enable debugging
 
 # Configure directories
@@ -13,6 +13,8 @@ bp_dir=$(cd $(dirname $0); cd ..; pwd)
 
 # Load some convenience functions like status(), echo(), and indent()
 source $bp_dir/bin/common.sh
+
+sed -i '' 's/FileUtils.rm_rf(File.join(build_dir, ".git"))//' /app/slug-compiler/lib/slug_compiler.rb
 
 # Output npm debug info on error
 trap cat_npm_debug_log ERR
@@ -131,6 +133,12 @@ fi
 status "Building runtime environment"
 mkdir -p $build_dir/.profile.d
 echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\";" > $build_dir/.profile.d/nodejs.sh
+
+# Export release hash
+
+RELEASE=v$((`grep -wo "^current_seq: .*" /app/tmp/push_metadata.yml | cut -d ' ' -f 2`+1))
+status "Creating profile.d/release.sh with $RELEASE"
+echo "export RELEASE=$RELEASE" >> $build_dir/.profile.d/release.sh
 
 # Post package.json to nomnom service
 # Use a subshell so failures won't break the build.
