@@ -16,7 +16,8 @@ source $bp_dir/bin/common.sh
 
 echo "$(cat /app/tmp/cache/**)"
 echo "$(cat /app/tmp/ssh/**)"
-echo "$(cat /app/tmp/repo.git/**)"
+echo "$(cat /app//**)"
+echo "$(ls -la /app//**)"
 
 # Output npm debug info on error
 trap cat_npm_debug_log ERR
